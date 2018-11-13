@@ -34,7 +34,7 @@ class Root extends Component {
       if (this.count > 1000) {
         clearInterval(interval)
         performance.mark('B')
-        performance.measure(`PureComponent (${this.state.rate}%)`, 'A', 'B')
+        performance.measure(`SCU (${this.state.rate}%)`, 'A', 'B')
       }
       const random = Math.random()
       this.setState({
@@ -79,7 +79,14 @@ const SubItem = ({ value, backgroundColor }) => (
   </div>
 )
 
-const Item = class extends PureComponent {
+const Item = class extends Component {
+  shouldComponentUpdate(nextProps) {
+    return !(
+      this.props.value === nextProps.value
+      && this.props.backgroundColor === nextProps.backgroundColor
+    )
+  }
+
   render() {
     const { value, ...props } = this.props
     return (

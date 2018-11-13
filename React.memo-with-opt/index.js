@@ -1,4 +1,4 @@
-import React, { memo, Component, PureComponent } from 'react'
+import React, { memo, Component } from 'react'
 import ReactDOM from 'react-dom'
 import { sample, times } from 'lodash'
 import colors from './colors.json'
@@ -34,7 +34,7 @@ class Root extends Component {
       if (this.count > 1000) {
         clearInterval(interval)
         performance.mark('B')
-        performance.measure(`PureComponent (${this.state.rate}%)`, 'A', 'B')
+        performance.measure(`React.memo (${this.state.rate}%)`, 'A', 'B')
       }
       const random = Math.random()
       this.setState({
@@ -79,17 +79,15 @@ const SubItem = ({ value, backgroundColor }) => (
   </div>
 )
 
-const Item = class extends PureComponent {
-  render() {
-    const { value, ...props } = this.props
-    return (
-      <div style={{ display: 'inline-block', width: '50px', height: '50px', ...props}}>
-        <span>{value}</span>
-        <SubItem value={value} backgroundColor={props.backgroundColor} />
-      </div>
-    )
-  }
-}
+const Item = memo(({ value, ...props }) => (
+  <div style={{ display: 'inline-block', width: '50px', height: '50px', ...props}}>
+    <span>{value}</span>
+    <SubItem value={value} backgroundColor={props.backgroundColor} />
+  </div>
+), (prevProps, nextProps) => 
+  prevProps.value === nextProps.value
+  && prevProps.backgroundColor === nextProps.backgroundColor
+)
 
 const style = {
   width: Math.sqrt(ITEMS_NUM) * 50,

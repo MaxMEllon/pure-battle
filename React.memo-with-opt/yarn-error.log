@@ -1,0 +1,41 @@
+Arguments: 
+  /Users/01024161/.ndenv/versions/v10.10.0/bin/node /Users/01024161/.dotfiles/node_modules/.bin/yarn add percel-bundler
+
+PATH: 
+  /Users/01024161/.ndenv/versions/v10.10.0/bin:/usr/local/Cellar/ndenv/0.4.0/libexec:/Users/01024161/.ndenv/plugins/node-build/bin:/Users/01024161/.zplug/bin:/bin:/Users/01024161/local/bin:/Users/01024161/local/go/bin:/Users/01024161/.dotfiles/node_modules/.bin:/Users/01024161/.yarn/bin:/Users/01024161/.pyenv/shims:/Users/01024161/.pyenv/bin:/Users/01024161/.goenv/shims:/Users/01024161/.goenv/bin:/Users/01024161/.rbenv/shims:/Users/01024161/.rbenv/bin:/Users/01024161/.ndenv/shims:/Users/01024161/.ndenv/bin:/usr/local/bin:/Users/01024161/.cargo/bin:/usr/bin:/usr/sbin:/sbin
+
+Yarn version: 
+  1.7.0
+
+Node version: 
+  10.10.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/percel-bundler: Not found
+      at Request.params.callback [as _callback] (/Users/01024161/.dotfiles/node_modules/yarn/lib/cli.js:65656:18)
+      at Request.self.callback (/Users/01024161/.dotfiles/node_modules/yarn/lib/cli.js:134675:22)
+      at Request.emit (events.js:182:13)
+      at Request.<anonymous> (/Users/01024161/.dotfiles/node_modules/yarn/lib/cli.js:135658:10)
+      at Request.emit (events.js:182:13)
+      at IncomingMessage.<anonymous> (/Users/01024161/.dotfiles/node_modules/yarn/lib/cli.js:135578:12)
+      at Object.onceWrapper (events.js:273:13)
+      at IncomingMessage.emit (events.js:187:15)
+      at endReadableNT (_stream_readable.js:1092:12)
+      at process._tickCallback (internal/process/next_tick.js:63:19)
+
+npm manifest: 
+  {
+    "name": "React.pure",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

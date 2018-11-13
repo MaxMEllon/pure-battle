@@ -1,5 +1,6 @@
 import React, { memo, Component } from 'react'
 import ReactDOM from 'react-dom'
+import { pure } from 'recompose'
 import { sample, times } from 'lodash'
 import colors from './colors.json'
 
@@ -31,15 +32,15 @@ class Root extends Component {
   onClick() {
     performance.mark('A')
     const interval = setInterval(() => {
-      if (this.count > 500) {
+      if (this.count > 1000) {
         clearInterval(interval)
         performance.mark('B')
-        performance.measure(`PureComponent (${this.state.rate}%)`, 'A', 'B')
+        performance.measure(`recompose/pure (${this.state.rate}%)`, 'A', 'B')
       }
       const random = Math.random()
       this.setState({
         items: times(ITEMS_NUM, i => {
-          if (i >= this.state.rate / 100 * ITEMS_NUM) {
+          if (Math.random() >= this.state.rate / 100) {
             return ({
               value: (Math.random() + '').slice(3, 6),
               backgroundColor: sampleColor(),
@@ -47,8 +48,7 @@ class Root extends Component {
           }
           return this.state.items[i]
         })
-      })
-      this.count++
+      }, () => this.count++)
     })
   }
 
@@ -67,28 +67,29 @@ class Root extends Component {
           <input value={this.state.rate} onChange={this.onChange} />
         </div>
         <ItemList {...this.state} />
-        <button onClick={this.onClick}>
-          start
-        </button>
+        <button onClick={this.onClick}>start</button>
       </div>
     )
   }
 }
 
-const Item = class extends React.PureComponent {
-  render() {
-    const { value, ...props } = this.props
-    return (
-      <div style={{ display: 'inline-block', width: '30px', height: '30px', ...props}}>
-        {value}
-      </div>
-    )
-  }
-}
+const SubItem = ({ value, backgroundColor }) => (
+  <div>
+    <span style={{ color: 'white' }}>{value}</span>
+    {times(4, (i) => <span key={i} style={{ width: '1px', height: '1px', backgroundColor }}>.</span>)}
+  </div>
+)
+
+const Item = pure(({ value, ...props }) => (
+  <div style={{ display: 'inline-block', width: '50px', height: '50px', ...props}}>
+    <span>{value}</span>
+    <SubItem value={value} backgroundColor={props.backgroundColor} />
+  </div>
+))
 
 const style = {
-  width: Math.sqrt(ITEMS_NUM) * 30,
-  height: Math.sqrt(ITEMS_NUM) * 30,
+  width: Math.sqrt(ITEMS_NUM) * 50,
+  height: Math.sqrt(ITEMS_NUM) * 50,
 }
 
 const ItemList = ({ items }) => (
